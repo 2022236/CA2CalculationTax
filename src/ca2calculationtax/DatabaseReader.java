@@ -19,13 +19,38 @@ public class DatabaseReader extends Database {
             Connection conn = DriverManager.getConnection(db_URL, USER, PASSWORD);
             Statement stmt = conn.createStatement();  
         ) {
-            String sql = String.format("SELECT * FROM %s WHERE userName='%s' AND password='%s';", tableName, userName, password);
-            ResultSet results = stmt.executeQuery(sql);
+           String retrievedUserName = results.getString("UserName");
+                String retrievedFirstName = results.getString("FirstName"); // Corrected column name
+                String retrievedLastName = results.getString("LastName");
+                String retrievedPosition = results.getString("Position");
+                Date retrievedBirthDate = results.getDate("BirthDate");
+                String retrievedEmail = results.getString("Email");
+                String retrievedPassWord = results.getString("PassWord");
+                String retrievedType = results.getString("Type");
+                commonVariables.Type userType;
 
-            if (results.next()) {
-                String userRole = results.getString("role");
-                return new User(userName, password, userRole);
-            }
+                if (retrievedType.equals("Regular")) { // Simplified string comparison
+                    userType = commonVariables.Type.Regular;
+                } else {
+                    userType = commonVariables.Type.Admin;
+                }
+
+                String retrievedMaritalStatus = results.getString("MaritalStatus");
+                commonVariables.MaritalStatus userMaritalStatus;
+
+                switch (retrievedMaritalStatus) {
+                    case "Single":
+                        userMaritalStatus = commonVariables.MaritalStatus.Single;
+                        break;
+                    case "Married":
+                        userMaritalStatus = commonVariables.MaritalStatus.Married;
+                        break;
+                    case "Widowed":
+                        userMaritalStatus = commonVariables.MaritalStatus.widowed;
+                        break;
+                    default:
+                        throw new AssertionError();
+                } 
             return null;
         } catch (Exception e) {
             e.printStackTrace();
