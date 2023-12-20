@@ -174,4 +174,26 @@ public class IOUtils {
         
         return userInput;
     }
+    
+    public Date getUserDate(String prompt) {
+        Scanner myKB = new Scanner(System.in);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        dateFormat.setLenient(false); //This linient is setted to falso because it will be able to parse dates
+        Date date = null;
+        boolean valid = false;
+
+         do {
+            System.out.println(prompt); // display prompt
+            try {
+                String dateInput = myKB.nextLine();//get a date - 
+                date = dateFormat.parse(dateInput); 
+                valid = true; // must be ok
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please use dd/MM/yyyy.");
+                myKB.nextLine(); // get rid of return char
+            }
+        } while (!valid); // keep going while input is not valid
+
+        return date; // now the input is valid, return it
+    }
 }
