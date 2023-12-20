@@ -43,6 +43,26 @@ public class DatabaseSetup extends Database{
                 + "PRIMARY KEY (UserName)"
                 + ");";
         stmt.execute(sql);
+//now creating a financial dataa table to handle the taxes data
+          stmt.execute("CREATE DATABASE IF NOT EXISTS " + dbFinancialData + ";");
+          stmt.execute("USE " + dbFinancialData + ";");
+          String createFinancialDataTableSql = "CREATE TABLE IF NOT EXISTS " +dbFinancialData+ ("
+            + "GrossPayment FLOAT NOT NULL,"
+            + "NetPayment FLOAT NOT NULL,"
+            + "USC FLOAT NOT NULL,"
+            + "PRSCI FLOAT NOT NULL,"
+            + "IncomingTax FLOAT NOT NULL,"
+            + "FinancialDataID INT NOT NULL AUTO_INCREMENT,"
+            + "User_PPS INT NULL,"
+            + "PRIMARY KEY (FinancialDataID),"
+            + "INDEX fk_FinancialData_User1_idx (User_PPS),"
+            + "CONSTRAINT fk_FinancialData_User1"
+            + " FOREIGN KEY (User_PPS)"
+            + " REFERENCES User (PPS)"
+            + " ON DELETE NO ACTION"
+            + " ON UPDATE NO ACTION"
+            + ");";
+        stmt.execute(createFinancialDataTableSql);
         return true;
       } catch (Exception e){
           e.printStackTrace();
