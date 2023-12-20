@@ -11,7 +11,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author lizam
+ * @author 2022236 and 2022404
  */
 public class DatabaseSetup extends Database{
      final static String dbBaseURL = "jdbc:mysql://localhost";
@@ -25,14 +25,22 @@ public class DatabaseSetup extends Database{
          Statement stmt = conn.createStatement();
             
             ){
+            // Create database if it doesn't exist
             stmt.execute("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
             stmt.execute("USE " + dbName + ";");
-            String sql = 
-                "CREATE TABLE IF NOT EXISTS " + tableName + " ("
-                + "userName VARCHAR(255),"
-                + "role VARCHAR(20),"
-                + "email VARCHAR(100),"
-                + "password VARCHAR(12)"
+
+            // SQL to create a table with all the attributes and PK
+            String sql = "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+                + "UserName VARCHAR(255),"
+                + "FirstName VARCHAR(255),"
+                + "LastName VARCHAR(255),"
+                + "Position VARCHAR(255),"
+                + "BirthDate DATE,"
+                + "Email VARCHAR(255),"
+                + "PassWord VARCHAR(255),"
+                + "Type ENUM('Admin', 'Regular'),"
+                + "MaritalStatus ENUM('Single', 'Married', 'Widowed'),"
+                + "PRIMARY KEY (UserName)"
                 + ");";
         stmt.execute(sql);
         return true;
