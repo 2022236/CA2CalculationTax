@@ -13,6 +13,7 @@ public abstract class Database {
    protected final static String USER = "ooc2023";
    protected final static String PASSWORD = "ooc2023";
    protected final static String dbName = "mydb";
+   protected final static String "dbFinancialData = "dbFinancialData";
    protected final static String tableName = "User";
    protected final static String db_URL = dbBaseURL + "/" + dbName;
 }
